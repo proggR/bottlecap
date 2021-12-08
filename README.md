@@ -1,8 +1,8 @@
 # Bottlecap
 
-MVP version of Deluge (described below). Left original Deluge copy/state behaviour despite a lot being culled/changed to cram an MVP into a deployable bytecode size, but the bigger picture goals remain... once Bottlecap's math/logic is tested (definitely not anywhere near correct atm I'm sure, haven't begun testing and still getting used to the lack of floating point math :\ lol), I'll be thinking through the restructuring needed to start incorporating the added features (p2p/group handshake protected markets, and "DTermProcessor", a simple term code registry allowing for custom on chain transaction processors that support central authorities with the same DTermProcessor constructs available to bubble term-coded events up whatever hierarchy is needed).
+WIP MVP version of Deluge (described below). Left original Deluge copy/state behaviour despite a lot being culled/changed to cram an MVP into a deployable bytecode size, but the bigger picture goals remain... once Bottlecap's math/logic is tested (definitely not anywhere near correct atm I'm sure, haven't begun testing and still getting used to the lack of floating point math :\ lol), I'll be thinking through the restructuring needed to start incorporating the added features (p2p/group handshake protected markets, and "DTermProcessor", a simple term code registry allowing for custom on chain transaction processors that support central authorities with the same DTermProcessor constructs available to bubble term-coded events up whatever hierarchy is needed).
 
-**TL;DR:** its an ERC-20 only BitTorrent Peer Wire Protocol inspired DEX crammed _inside_ an ERC20 token that aspires to be something more than that... a protocol for p2p capital flows, built to support industry specific on-chain reporting/processing needs :P
+**TL;DR:** its an ERC20-only BitTorrent Peer Wire Protocol inspired DEX crammed _inside_ an ERC20 token that aspires to be something more than that... a protocol for p2p capital flows, built to support industry specific on-chain reporting/processing needs :P
 
 `contracts/Bottlecap.sol` contains the current "main". About to refactor with `BottlecapStuffed` to see if I can free up enough bytecode footprint to cram at least the p2p markets back in before cooking up a lil React app for this.
 
@@ -33,7 +33,7 @@ Whatcha think? Anything here? BitTorrent Protocol applied to capital flows seems
 ~~Peer~~, Offer, Bottle, Payload, Pool
 
 ## Functions:
-mint(), announce(), whisper(), pool(), fill(), sendBottle(), sendPayload()
+mint(), announce(), whisper(), pool(), recant(), fill(), sendBottle(), sendPayload()
 
 ## State:
 - mapping(uint=>address) termRegistry;

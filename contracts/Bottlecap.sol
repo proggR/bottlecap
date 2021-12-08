@@ -1,8 +1,7 @@
 pragma solidity ^0.6.0;
 pragma experimental ABIEncoderV2;
-/* import {BokkyPooBahsRedBlackTreeLibrary } from "./BokkyPooBahsRedBlackTreeLibrary.sol"; */
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-/* import {DTermBottleProcessor, DTermPayloadProcessor, DTermAuth } from "./DTerm.sol"; */
+
 
 contract Bottlecap is ERC20 {
 using BokkyPooBahsRedBlackTreeLibrary for BokkyPooBahsRedBlackTreeLibrary.Tree;
@@ -29,7 +28,7 @@ using BokkyPooBahsRedBlackTreeLibrary for BokkyPooBahsRedBlackTreeLibrary.Tree;
         owner = msg.sender;
         marketIdxCursor = 0;
         halted = true;
-        _mint(msg.sender, initialSupply*10**8);
+        _mint(msg.sender, initialSupply*10**18);
     }
 
     // SEED/CONSUMER BOTTLE MAPPINGS
@@ -229,9 +228,9 @@ using BokkyPooBahsRedBlackTreeLibrary for BokkyPooBahsRedBlackTreeLibrary.Tree;
       transferFrom(bottle_.owner, msg.sender,_fee);
 
       if(bottle_.value == 0){
-        emit BottleCapped(bottle_.owner,bottle_.asset);
         removeOption(idx_,key_);
         delete peerMarketBottles[bottle_.owner][idx_.idx];
+        emit BottleCapped(bottle_.owner,bottle_.asset);
       }
       return offer_.valueIn;
     }
