@@ -1,0 +1,12 @@
+/* uint totalSupply = initialSupply*10**8; */
+/* uint icoSupply = totalSupply/5;
+uint minterSupply = totalSupply/4;
+uint airdropSupply = totalSupply/4;
+uint testSupply = 0;//totalSupply/10;
+uint personalSupply = 100000000*10**8;
+totalSupply -= icoSupply + minterSupply + airdropSupply + personalSupply + testSupply;
+
+_mint(personalAddress, personalSupply);
+_mint(initialOfferingAddress, icoSupply);
+_mint(airdropAddress, airdropSupply);
+_mint(marketRewardAddress, minterSupply); */

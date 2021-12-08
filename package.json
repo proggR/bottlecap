@@ -1,0 +1,26 @@
+{
+  "name": "deluge",
+  "version": "1.0.0",
+  "description": "Inspired by JAK Bank's Savings Point model and BitTorrent's Peer Wire Protocol, **Deluge** is a simple DEX baked into an ERC20 token (XFD), supporting transient p2p markets, and p2p group based markets through the same marketHash based mechanisms it uses to serve its public markets in order to minimize underlying complexity. With a relatively simple and low profile state/function/event model, I propose that with work/polish, this interface could form the basis for a simple protocol for reliably fair & trustworthy direction, exchange, and accounting of capital.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.2",
+    "hardhat": "^2.7.0",
+    "hardhat-contract-sizer": "^2.1.1",
+    "hardhat-deploy": "^0.9.14",
+    "hardhat-deploy-ethers": "^0.3.0-beta.11"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.4.2",
+    "@openzeppelin/contracts-upgradeable": "^4.4.0"
+  }
+}
