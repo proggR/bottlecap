@@ -13,7 +13,7 @@ WIP MVP version of Deluge (described below). Left original Deluge copy/state beh
 
 Internally, it reduces the market hashes to an Index struct tracking a numerical ID for the market, along with the direction of its pairing (since I only need 1 tree for the orderbook, I just need to know which way's "up" for each market hash :P). From there it's a simple process of attempting to fill the offer (this logic needs the most TLC before testing atm), swapping the assets if there's any agreeable Bottles on the wire, and then sending any unfilled portion to the wire.
 
-Code is in Solidity using Hardhat and OpenZeppelin's ERC20 contract as a base (non-upradeable for now). Also makes use of the fantastic BokkyPooBahsRedBlackTreeLibrary for market data... srsly thank you for that. My brain was turning to mush trying to imagine haxx to get this done efficiently. Was about to try my hand at using tpmccallum's microslots model to cram "cost_padding_address" into a uint256... which would have not been ideal, if its even possible :\ (gave up solving that hurdle once BokkyPooBah saved me from myself). 
+Code is in Solidity using Hardhat and OpenZeppelin's ERC20 contract as a base (non-upradeable for now). Also makes use of the fantastic BokkyPooBahsRedBlackTreeLibrary for market data... srsly thank you for that. My brain was turning to mush trying to imagine haxx to get this done efficiently. Was about to try my hand at using tpmccallum's microslots model to cram "cost_padding_address" into a uint256... which would have not been ideal, if its even possible :\ (gave up solving that hurdle once BokkyPooBah saved me from myself).
 
 @TODO:
 - refactor to re-use Offer struct within Bottle to reduce duplicated state (should have called Offer "Message" instead :P)
@@ -23,6 +23,7 @@ Code is in Solidity using Hardhat and OpenZeppelin's ERC20 contract as a base (n
 - write out hardhat tasks required to fully test/unit tests to avoid breaking anything with further changes
 - plan bots to slosh test tokens around. should be relatively straight forward comparisons looking for arbops on SpotCheck events, with semi-random initial stacks of each
 - plan/make beta React app... supported features will depend on whether bytecode can be pared enough to add p2p markets back in (plsplsplspls)
+- attempt to refactor BokkyPooBahsRedBlackTreeLibrary to compile with 0.8.0?... that'll be a nice and weird learning experience I'm sure :\
 - plan next iteration, which attempts to include remaining Deluge featureset in a refactor that breaks things into multiple contracts
 
 
