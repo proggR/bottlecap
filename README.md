@@ -31,43 +31,48 @@ Code is in Solidity using Hardhat and OpenZeppelin's ERC20 contract as a base (n
 
 Inspired by JAK Bank's Savings Point model and BitTorrent's Peer Wire Protocol, **Deluge** is a simple DEX baked into an ERC20 token (XFD), supporting transient p2p markets, and p2p group based markets through the same marketHash based mechanisms it uses to serve its public markets in order to minimize underlying complexity. With a relatively simple and low profile state/function/event model, I propose that with work/polish, this interface could form the basis for a simple protocol for reliably fair & trustworthy direction, exchange, and accounting of capital.
 
-Comprised solely of ~~`Peer`~~ (culled for now in Bottlecap... may/may not return in Deluge), `Offer`,`Bottle` and `Payload`, and of the 3 public functions `announce`, `whisper` and `pool`, **Deluge** is able to match market offers with current bids in a fair and efficient way, while also allowing `handshakeHash` protected transient p2p markets to be processed with the same mechanisms. Using the `Pool` struct, pre-authed or open group p2p markets are also able to be created, again leveraging the same underlying token swap mechanism.
+Comprised primarily of ~~`Peer`~~ (culled for now in Bottlecap... may/may not return in Deluge), `Offer`,`Bottle` and `Payload`, and of the 3 public functions `announce`, `whisper` and `pool`, **Deluge** is able to match market offers with current bids in a fair and efficient way, while also allowing `handshakeHash` protected transient p2p markets to be processed with the same mechanisms. Using the `Pool` struct, pre-authed or open group p2p markets are also able to be created, again leveraging the same underlying token swap mechanism.
 
 Also includes support for the "`DTermProcessor`"/"`DTermAuth`" construct (WIP), which is a simple Interface that allows for industry/use-case specific term processors to be constructed, taking in the key transactional data from each event emitting transaction, and calling on chain functions in the appropriate DTerm implementation contract to enable for complex reporting needs to be met, including submission to industry/use-case specific delegated authorities as defined by DTermAuth records identified in each DTermProcessor contract. Intention is to architect in such a way that these DTerms could cascade, with one layer feeding into the next, bubbling relevant data up the chain of command for faster audit and reward feedback loops, and by extension just less hassle involved in the process of handling the accounting of capital flows... I dream of the day I never have to fill in a tax form, because taxes have been automagically handled ad-hoc all along. Velocity of money is important... why only process taxes quarterly/annually, and in an inefficient way that creates a cottage industry from the waste? New infrastructure built to automate the accounting trail = less waste = more profits, and we all like money, right?
 
 Whatcha think? Anything here? BitTorrent Protocol applied to capital flows seems both doable, and worth doing... still working through the implementation, especially the p2p matchmaking element I envision trying to tee up markets between haves/have nots, but I'll save that for when the React app for the current iteration is added... once there's a "current iteration" to build a React app for :\ lol. Still hung up on the (even/especially to me) insane idea that [Fractional](https://fractional.foundation) could _maybe_ in some strange bizarro universe be a viable model for a new M0/MB... which now has me working through the question... what would "the rails" for an entirely new commons owned, socially driven/minded, and p2p M0/MB look like? Is it something like this?... taking the BitTorrent Protocol, and applying it to capital flows?
 
 ## Structs:
-~~Peer~~, Offer, Bottle, Payload, Pool
+~~Peer~~, Index, Offer, Bottle, Payload, Pool
 
 ## Functions:
-mint(), announce(), whisper(), pool(), recant(), fill(), sendBottle(), sendPayload()
+- public: mint(), announce(), ~~whisper(), pool(),~~ recant()
+- internal: mintHash(), fill(), sendBottle(), swapPayloads(), sendPayload()
+- internal market: nextMaxOption(), insertOption(), removeOption()
 
 ## State:
-- mapping(uint=>address) termRegistry;
-- mapping(address=>uint256[]) peerPermittedTerms;
+~~- mapping(uint=>address) termRegistry;~~
+~~- mapping(address=>uint256[]) peerPermittedTerms;~~
 
-- uint maxPasses = 3;
-- uint _costMultiplier = 10*10**18;
+~~- uint maxPasses = 3;~~
+~~- uint _costMultiplier = 10*10**18;~~
 
 -    //map peer=>market=>bottle
-- mapping(address=>mapping(bytes32=>Bottle)) marketSeedBandwidth;
-- mapping(address=>mapping(bytes32=>Bottle)) marketPeerAppetite;
+~~- mapping(address=>mapping(bytes32=>Bottle)) marketSeedBandwidth;~~
+~~- mapping(address=>mapping(bytes32=>Bottle)) marketPeerAppetite;~~
+- mapping(address=>mapping(uint256=>Bottle)) peerMarketBottles;
 
-- mapping(bytes32=>uint256) currentSpot;
+- mapping(~~bytes32~~ uint256=>uint256) currentSpot;
 
-- mapping(bytes32=>MoneyTree) marketTrees;
-- mapping(bytes32=>mapping(uint=>address)) treeAddresses;
+- mapping(~~bytes32~~ uint256=>MoneyTree) marketTrees;
+- mapping(~~bytes32~~ uint256=>mapping(uint=>address)) treeAddresses;
 
-- mapping(bytes32=>uint) marketIdx;
+- uint marketIdxCursor;
+- mapping(bytes32=>~~uint~~ Index) marketIdx;
+
 
 -    //inputs/outputs for each markethash
 - mapping(bytes32=>address) marketInputs;
 - mapping(bytes32=>address) marketOutputs;
 
 -    //available asset pairs for each asset
-- mapping(address=>address[]) inputMarkets;
-- mapping(address=>address[]) outputMarkets;
+~~- mapping(address=>address[]) inputMarkets;~~
+~~- mapping(address=>address[]) outputMarkets;~~
 
 ## Events:
 Transfer, PairHashed, BottleSent, BottleUpdated, BottleCapped, PayloadSent, SpotCheck
