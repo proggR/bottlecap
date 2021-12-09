@@ -11,12 +11,18 @@ WIP MVP version of Deluge (described below). Left original Deluge copy/state beh
 - **announce:** announce to the specific market hash which asset you want to offer (it knows, its just to ensure you're in the right place), how much you're offering, and how much of the other asset you'd like in return, along with your fee (in BTTL). unlike most exchanges, the incentives in Bottlecap are flipped and reward the Takers, meaning you get paid your fee if your offer ends up removing another offer from the wire, making hugging spot price for both the asset and BTTL fees the best bet
 - **recant:** remove your Bottle (offer) from the wire
 
-Internally, it reduces the market hashes to an Index struct tracking a numerical ID for the market, along with the direction of its pairing (since I only need 1 tree for the orderbook, I just need to know which way's "up" for each market hash :P). From there it's a simple process of attempting to fill the offer, swapping the assets if there's any matches, and then sending any unfilled portion to the wire.
+Internally, it reduces the market hashes to an Index struct tracking a numerical ID for the market, along with the direction of its pairing (since I only need 1 tree for the orderbook, I just need to know which way's "up" for each market hash :P). From there it's a simple process of attempting to fill the offer (this logic needs the most TLC atm), swapping the assets if there's any agreeable Bottles on the wire, and then sending any unfilled portion to the wire.
 
-Code is in Solidity using Hardhat and OpenZeppelin's ERC20 contract as a base (non-upradeable for now). Also makes use of the fantastic BokkyPooBahsRedBlackTreeLibrary for market data... srsly thank you for that. My brain was turning to mush trying to imagine haxx to get this done efficiently. Was about to try my hand at using tpmccallum's microslots model to cram "cost_padding_address" into a uint256... which would have not been ideal, if its even possible :\ (gave up solving that hurdle once BokkyPooBah saved me from myself lol)
+Code is in Solidity using Hardhat and OpenZeppelin's ERC20 contract as a base (non-upradeable for now). Also makes use of the fantastic BokkyPooBahsRedBlackTreeLibrary for market data... srsly thank you for that. My brain was turning to mush trying to imagine haxx to get this done efficiently. Was about to try my hand at using tpmccallum's microslots model to cram "cost_padding_address" into a uint256... which would have not been ideal, if its even possible :\ (gave up solving that hurdle once BokkyPooBah saved me from myself)
 
 @TODO:
+- refactor to re-use Offer struct within Bottle to reduce duplicated state
+- fix fill logic/confirm direction logic is actually enforcing the correct directions... wouldn't be surprised its backwards :\
+- fix SpotCheck event... definitely raised in a weird/incorrect spot
+- write out hardhat tasks required to fully test/unit tests to avoid breaking anything with further changes
 - plan bots to slosh test money around. should be relatively straight forward comparisons looking for arbops on SpotCheck events, with semi-random initial stacks of each
+- plan React app... supported features will depend on whether bytecode can be pared enough to add p2p markets back in
+- plan next iteration, which attempts to include remaining Deluge featureset in a refactor that breaks things into multiple contracts
 
 
 # Fractional Deluge (XFD)
